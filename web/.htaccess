@@ -1,0 +1,71 @@
+# Use the PHP 7.3 FPM application
+<IfModule mod_php7.c>
+    php_value memory_limit 128M
+</IfModule>
+
+# Use the PHP 7.4 FPM application
+<IfModule mod_php7.c>
+    php_value memory_limit 128M
+</IfModule>
+
+# Use the PHP 8.0 FPM application
+<IfModule mod_php8.c>
+    php_value memory_limit 128M
+</IfModule>
+
+# Use the PHP 8.1 FPM application
+<IfModule mod_php8.c>
+    php_value memory_limit 128M
+</IfModule>
+
+# Redirect Trailing Slashes...
+<IfModule mod_rewrite.c>
+    RewriteEngine on
+    RewriteBase /
+
+    # Redirect all requests to the front controller.
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?q=$1 [L,QSA]
+</IfModule>
+
+# Prevent Direct Access to Certain Files and Directories
+<FilesMatch "\.(engine|inc|install|make|module|profile|theme|txt|xml)$">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Protect the sites directory
+<Directory "sites">
+    AllowOverride None
+    <FilesMatch ".*">
+        Order allow,deny
+        Deny from all
+    </FilesMatch>
+</Directory>
+
+# Uncomment this to disable access to the files directory.
+# <Directory "sites/default/files">
+#   AllowOverride None
+#   <FilesMatch ".*">
+#     Order allow,deny
+#     Deny from all
+#   </FilesMatch>
+# </Directory>
+
+# Disable directory listings
+Options -Indexes
+
+# Set the default handler
+<IfModule mod_negotiation.c>
+    Options +MultiViews
+</IfModule>
+
+# Disable ETags
+Header unset ETag
+FileETag None
+
+# Enable compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
